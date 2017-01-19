@@ -1,63 +1,65 @@
+
+/**
+ * @author Ghadah
+ *
+ */
 import java.util.*;
+
 public class Order {
-    
-    public static int order_num = 0;
-    private ArrayList<MenuItem> order= new ArrayList<MenuItem>();
-    public boolean orderStat = false;
-    public String status;
-    
-    public Order(MenuItem m){
-      if(orderStat){
-        order.add(m);
-        order_num++;
-        }
+
+  private static int order_num = 0;
+  private ArrayList<MenuItem> order = new ArrayList<MenuItem>();
+  boolean isConfirmed = false;
+  private String status;
+
+  public Order(MenuItem m) {
+    getOrder().add(m);
+    order_num++;
+  }
+
+  public void modifyOrder(int orderNumber) {
+    if (getOrder().contains(getOrder().get(orderNumber))) {
+      getOrder().remove(orderNumber);
+      getOrder().add(new MenuItem());
     }
-    
-    public void modifyOrder(int orderNumber){           //check the attribute
-        if(order.contains(order.get(orderNumber))){
-          order.remove(orderNumber);
-          order.add(new MenuItem());
-        }
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getStatus() {
+    return this.status;
+  }
+
+  public void cancelOrder(int orderNum) {
+    if (!getOrder().isEmpty())
+      getOrder().remove(order_num);
+  }
+
+  public void confirmOrder() {
+    isConfirmed = true;
+  }
+
+  public int getOrderTime() { // name of variable (Time)
+    int time = 0;
+    for (int i = 0; i < getOrder().size(); i++) {
+      time += getOrder().get(i).time;
     }
-    
-    public void setStatus(){                        //NOT YET DONE!!
-      //placed 
-        
-      // pending 
-        
-      // delivered 
+    return time;
+
+  }
+
+  public int getOrderTotal() {   // name of variable (price)
+    int total = 0;
+    for (int i = 0; i < getOrder().size(); i++) {
+      total += getOrder().get(i).price;
     }
-    
-    public String getStatus(){
-      if(orderStat)
-        return "Pending";
-      else
-        return "Not Placed";
-    }
-    
-    public void cancelOrder(int orderNum){
-      if(!order.isEmpty())
-        order.remove(order_num);
-    }
-    
-    public void confirmOrder(){                                  // CHECK THIS !!!
-      orderStat = true;
-    }
-    
-    public int getOrderTime(){
-      int time = 0;   
-      for(int i =0; i<order.size();i++){
-           time += order.get(i).timeTaken;
-         }
-      return time;
-      
-    }
-    
-    public int getOrderTotal(){
-      int total = 0;   
-      for(int i =0; i<order.size();i++){
-           total += order.get(i).price;
-         }
-      return total;
-    }
+    return total;
+  }
+
+  public ArrayList<MenuItem> getOrder() {
+    return order;
+  }
+
 }
